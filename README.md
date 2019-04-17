@@ -35,19 +35,19 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-+  import plantCherry from 'react-teamwork';
++  import start from 'react-teamwork';
 +  import models from './models';
 +  
-+  const cherry = plantCherry(App, document.getElementById('root'), models);
++  const { updateApp, updateModels } = start(App, document.getElementById('root'), models);
 +  
 +  // enable HMR
 +  if (module.hot && process.env.NODE_ENV !== 'production') {
 +    module.hot.accept('./App', () => {
-+      cherry.updateApp(App);
++      updateApp(App);
 +    })
 +  
 +    module.hot.accept('./models', () => {
-+      cherry.updateModels(models);
++      updateModels(models);
 +    })
 +  }
 -  ReactDOM.render(<App />, document.getElementById('root'));

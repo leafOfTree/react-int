@@ -4,14 +4,14 @@ import { call, put, select, takeEvery } from 'redux-saga/effects';
 import getReducers from '../src/getReducers';
 import getRootSaga from '../src/getRootSaga';
 import sagaManager from '../src/sagaManager';
-import cherryMiddleware from '../src/middleware';
+import middleware from '../src/middleware';
 import { models, mockCount } from './data';
 
 const reducer = getReducers(models);
 const sagaMiddlware = createSagaMiddleware();
 const store = createStore(
   reducer,
-  applyMiddleware(sagaMiddlware, cherryMiddleware),
+  applyMiddleware(sagaMiddlware, middleware),
 );
 
 describe('model effects', () => {
