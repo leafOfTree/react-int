@@ -1,0 +1,34 @@
+{
+  "name": "react-teamwork",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "jest --watch",
+    "start": "nodemon --watch src --exec babel src --out-dir dist",
+    "build": "babel src --out-dir dist"
+  },
+  "keywords": [
+    "react",
+    "redux",
+    "redux-saga",
+    "dva"
+  ],
+  "author": "https://github.com/leafOfTree",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/plugin-transform-react-jsx": "^7.3.0",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/preset-react": "^7.0.0",
+    "babel-jest": "^24.7.1",
+    "jest": "^24.7.1",
+    "nodemon": "^1.18.11",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-redux": "^6.0.1",
+    "redux-saga": "^1.0.2"
+  },
+  "dependencies": {}
+}
