@@ -119,7 +119,7 @@ class App extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Learn React with redux, redux-saga
+            Learn React
           </a>
 +         <button onClick={this.increaseAsync}>Click</button>
 +         <div>Count: {this.props.count}</div>
