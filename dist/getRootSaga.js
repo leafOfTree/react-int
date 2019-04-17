@@ -9,6 +9,10 @@ var _effects = require("redux-saga/effects");
 
 const putWithNamespace = (put, namespace) => {
   return action => {
+    if (!action.type) {
+      throw new Error('action must have type.');
+    }
+
     if (action.type.indexOf(`/`) === -1) {
       action.type = `${namespace}/${action.type}`;
     }

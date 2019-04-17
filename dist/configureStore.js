@@ -23,7 +23,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 const reduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
 
-const configureStore = (models, options) => {
+const configureStore = (models, options = {}) => {
   (0, _utils.validModels)(models);
   const {
     onStateChange,

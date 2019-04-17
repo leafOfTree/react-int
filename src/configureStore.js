@@ -9,7 +9,7 @@ import { validModels } from './utils';
 const reduxDevTools =
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
 
-const configureStore = (models, options) => {
+const configureStore = (models, options={}) => {
   validModels(models);
   const { onStateChange, initialState } = options;
 
