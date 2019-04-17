@@ -20,6 +20,8 @@ react-teamwork is a combination and encapsulation of react-redux and redux-saga,
 
 ## Usage with create-react-app
 
+[![Edit react-teamwork-demo](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/61wpmyj04r?fontsize=14)
+
 Init a demo project
 
     create-react-app react-teamwork-demo
