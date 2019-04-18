@@ -1,6 +1,6 @@
-# react-teamwork
+# react-int
 
-A simple way to use [react][0] with [react-redux][1], [redux-saga][2]. Keep most things in one file(called model) like [Dva][3].
+A simple way to use [react][0] with [react-redux][1], [redux-saga][2]. Keep most things in one file(model) like [Dva][3].
 
 ## Feature
 
@@ -12,61 +12,58 @@ A simple way to use [react][0] with [react-redux][1], [redux-saga][2]. Keep most
 
 ## How it works
 
-react-teamwork is a combination and encapsulation of react-redux and redux-saga, aiming to simplify code and related files.
+react-int is an encapsulation of react-redux and redux-saga, aiming to simplify code and related files.
 
 ## Install
 
-    npm i --save react-teamwork
+    npm i --save react-int
 
 ## Usage with create-react-app
 
-[![Edit react-teamwork-demo](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/61wpmyj04r?fontsize=14)
+Usage with create-react-app: [![Edit react-int-demo](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/61wpmyj04r?fontsize=14)
+
+See [Quick start]()
 
 Init a demo project
 
-    create-react-app react-teamwork-demo
+    create-react-app react-int-demo
     
-    cd react-teamwork-demo/src
+    cd react-int-demo/src
 
-Modify entry`./index.js`
+Change entry`./index.js`
 
-```diff
--  import React from 'react';
--  import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+```javascript
+import start from "react-int";
+import App from "./App";
+import "./index.css";
+import models from "./models";
 
-+  import start from 'react-teamwork';
-+  import models from './models';
-+  
-+  const { updateApp, updateModels } = start(App, document.getElementById('root'), models);
-+  
-+  // enable HMR
-+  if (module.hot && process.env.NODE_ENV !== 'production') {
-+    module.hot.accept('./App', () => {
-+      updateApp(App);
-+    })
-+  
-+    module.hot.accept('./models', () => {
-+      updateModels(models);
-+    })
-+  }
--  ReactDOM.render(<App />, document.getElementById('root'));
+const { updateApp, updateModels } = start(
+  App,
+  document.getElementById("root"),
+  models,
+);
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+// enable HMR
+if (module.hot && process.env.NODE_ENV !== "production") {
+  module.hot.accept("./App", () => {
+    updateApp(App);
+  });
+
+  module.hot.accept("./models", () => {
+    updateModels(models);
+  });
+}
 ```
 
 Add `./models/index.js`
 
 ```javascript
-export const models = [{
+export default [{
   namespace: 'app',
   state: {
     count: 0,
+    loading: false,
   },
   reducers: {
     update: (state, action) => {
@@ -79,34 +76,54 @@ export const models = [{
   effects: {
     *increaseAsync(action, { call, put, select }) {
       const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+      yield put({
+        type: 'update',
+        payload: { loading: true },
+      });
       yield call(delay, 1000);
+      yield put({
+        type: 'update',
+        payload: { loading: false },
+      });
 
       const count = yield select(state => state.app.count);
       yield put({
         type: 'update',
         payload: {
-          count: ++count,
+          count: count + 1,
         }
       });
     }
   }
-}];
+}, 
+  // require('./path/to/model').default, 
+];
 ```
 
-Modify `./App.js`
+Change `./App.js`
 
-```diff
-import React, { Component } from 'react';
-+import { connect } from 'react-redux';
-import logo from './logo.svg';
-import './App.css';
+```javascript
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import "./App.css";
+import logo from "./logo.svg";
 
 class App extends Component {
-+ increaseAsync = () => {
-+   this.props.dispatch({
-+     type: 'app/increaseAsync',
-+   })
-+ }
+  increase = () => {
+    this.props.dispatch({
+      type: "app/update",
+      payload: {
+        count: this.props.count + 1
+      }
+    });
+  };
+
+  increaseAsync = () => {
+    this.props.dispatch({
+      type: "app/increaseAsync"
+    });
+  };
+
   render() {
     return (
       <div className="App">
@@ -123,20 +140,23 @@ class App extends Component {
           >
             Learn React
           </a>
-+         <button onClick={this.increaseAsync}>Click</button>
-+         <div>Count: {this.props.count}</div>
+          <div>
+            <button onClick={this.increase}>Increase</button>
+            <span> </span>
+            <button onClick={this.increaseAsync}>Increase Async</button>
+          </div>
+          <div>Count: {this.props.count}</div>
+          <div>{this.props.loading && "Loading..."}</div>
         </header>
       </div>
     );
   }
 }
 
--export default App;
-+export default connect(state => ({
-+  ...state.app,
-+}))(App);
+export default connect(state => ({
+  ...state.app
+}))(App);
 ```
-
 
 [0]: https://github.com/facebook/react
 [1]: https://github.com/reduxjs/react-redux
