@@ -59,7 +59,7 @@ if (module.hot && process.env.NODE_ENV !== "production") {
 
 ## Documentation
 
-Basic introduction can be found on [react-int website](https://leafoftree.github.io/react-int).
+Basic introduction can be found on [the website](https://leafoftree.github.io/react-int).
 
 Refer to [react][0], [react-redux][1], [redux-saga][2] for further documentation.
 
