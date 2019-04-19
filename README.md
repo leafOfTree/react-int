@@ -5,43 +5,38 @@ A simple way to use [react][0] with [react-redux][1], [redux-saga][2]. Keep most
 ## Feature
 
 - Reducers and sagas in one file.
-- Namespace for state.
-- Key as action types. (Convenient)
-- HMR everywhere. (need extra code snippets)
-- works with [create-react-app][4].
+- Namespace.
+- Key as action type. (Convenient)
+- HMR everywhere. (Need extra code snippets)
+- Promisified dispatch.
+- Handling Effect error without terminating app.
+- Works with [create-react-app][4].
 
 ## How it works
 
-react-int is an encapsulation of react-redux and redux-saga, aiming to simplify code and related files.
+react-int is an encapsulation of react-redux and redux-saga, aiming to simplify code and related files. Its main job is to create store from models and render app.
 
 ## Install
 
-    npm i --save react-int
+    yarn add react-redux redux-saga react-int
 
-## Usage with create-react-app
+    # or 
+    npm i --save react-redux redux-saga react-int
 
-Usage with create-react-app: [![Edit react-int-demo](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/61wpmyj04r?fontsize=14)
+## Usage
 
-See [Quick start]()
-
-Init a demo project
-
-    create-react-app react-int-demo
-    
-    cd react-int-demo/src
-
-Change entry`./index.js`
+Start app, write models and connect components. That's all.
 
 ```javascript
 import start from "react-int";
-import App from "./App";
-import "./index.css";
 import models from "./models";
+import App from "./App";
 
 const { updateApp, updateModels } = start(
   App,
   document.getElementById("root"),
   models,
+  {/* options */},
 );
 
 // enable HMR
@@ -56,107 +51,11 @@ if (module.hot && process.env.NODE_ENV !== "production") {
 }
 ```
 
-Add `./models/index.js`
+- Full online demo: [![Edit react-int-demo](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/61wpmyj04r?fontsize=14)
 
-```javascript
-export default [{
-  namespace: 'app',
-  state: {
-    count: 0,
-    loading: false,
-  },
-  reducers: {
-    update: (state, action) => {
-      return {
-        ...state,
-        ...action.payload,
-      };
-    },
-  },
-  effects: {
-    *increaseAsync(action, { call, put, select }) {
-      const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-      yield put({
-        type: 'update',
-        payload: { loading: true },
-      });
-      yield call(delay, 1000);
-      yield put({
-        type: 'update',
-        payload: { loading: false },
-      });
+- <a href="https://leafoftree.github.io/react-int/#/quick_start">Quick start</a>
 
-      const count = yield select(state => state.app.count);
-      yield put({
-        type: 'update',
-        payload: {
-          count: count + 1,
-        }
-      });
-    }
-  }
-}, 
-  // require('./path/to/model').default, 
-];
-```
-
-Change `./App.js`
-
-```javascript
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import "./App.css";
-import logo from "./logo.svg";
-
-class App extends Component {
-  increase = () => {
-    this.props.dispatch({
-      type: "app/update",
-      payload: {
-        count: this.props.count + 1
-      }
-    });
-  };
-
-  increaseAsync = () => {
-    this.props.dispatch({
-      type: "app/increaseAsync"
-    });
-  };
-
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          <div>
-            <button onClick={this.increase}>Increase</button>
-            <span> </span>
-            <button onClick={this.increaseAsync}>Increase Async</button>
-          </div>
-          <div>Count: {this.props.count}</div>
-          <div>{this.props.loading && "Loading..."}</div>
-        </header>
-      </div>
-    );
-  }
-}
-
-export default connect(state => ({
-  ...state.app
-}))(App);
-```
+- <a href="https://leafoftree.github.io/react-int/#/apis">APIs</a>
 
 [0]: https://github.com/facebook/react
 [1]: https://github.com/reduxjs/react-redux
