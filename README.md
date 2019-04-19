@@ -1,6 +1,6 @@
 # react-int
 
-A simple way to use [react][0] with [react-redux][1], [redux-saga][2]. Keep most things in one file(model) like [Dva][3].
+A simple way to use [react][0] with [react-redux][1] and [redux-saga][2]. Keep most things in one file(model) like [Dva][3].
 
 ## Feature
 
