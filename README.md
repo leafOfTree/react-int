@@ -57,6 +57,12 @@ if (module.hot && process.env.NODE_ENV !== "production") {
 
 - <a href="https://leafoftree.github.io/react-int/#/apis">APIs</a>
 
+## Documentation
+
+See [react-int documentation](https://leafoftree.github.io/react-int).
+
+Refer to [react][0], [react-redux][1], [redux-saga][2] for further documentation.
+
 [0]: https://github.com/facebook/react
 [1]: https://github.com/reduxjs/react-redux
 [2]: https://github.com/redux-saga/redux-saga
