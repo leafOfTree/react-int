@@ -25,7 +25,7 @@ react-int is an encapsulation of react-redux and redux-saga, aiming to simplify 
 
 ## Usage
 
-Start app, write models and connect components. That's all.
+Start app, write models and connect components. That's all. :tada:
 
 ```javascript
 import start from "react-int";
