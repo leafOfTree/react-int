@@ -16,7 +16,7 @@
 
     model properties are: 
 
-    - `namespace: String` An identify to shape state to small ones with the namespace as key. Action type should be `namespace/type` outside model. You can use `type` directly inside model
+    - `namespace: String` An identify to shape state to small ones with the namespace as key. `namespace` should be prefixed to action type as `namespace/type` in `dispatch` or `put`. If the `dispatch` or `put` is provided by function argument, it can be omitted.
         
     - `state: Object` An object to initial model state
     - `reducers?: Object`: Key is the action type, and value is the reducer function.
