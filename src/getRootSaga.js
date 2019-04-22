@@ -1,4 +1,6 @@
-import { call, put, select, takeEvery, takeLatest, takeLeading } from 'redux-saga/effects';
+import {
+  call, put, select, fork, takeEvery, takeLatest, takeLeading 
+} from 'redux-saga/effects';
 
 const putWithNamespace = (put, namespace) => {
   return action => {
@@ -61,7 +63,7 @@ const getRootSaga = (models, config) => {
       }
 
       for (let watcherSaga in sagas) {
-        yield* sagas[watcherSaga]();
+        yield fork(sagas[watcherSaga]);
       }
     }
   }

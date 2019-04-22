@@ -10,26 +10,34 @@
 
 - `root: HTMLElement` The root HTML element to render into
 
-### Models
+- `models: Array` See details below
+
+- `options?: Object` See details below
+
+## Models
 
 - `models: Array` Objects with reducers and effects which mainly handle data logic
 
-    model properties are: 
+    model properties are
 
-    - `namespace: String` An identify to shape state to small ones with the namespace as key. `namespace` should be prefixed to action type as `namespace/type` in `dispatch` or `put`. If the `dispatch` or `put` is provided by function argument, it can be omitted.
-        
+    - `namespace: String` An identify to shape state to small ones with the namespace as key. `namespace` should be prefixed to action type as `namespace/type` in `dispatch` and `put`. If `dispatch` or `put` is provided by `react-int` function argument, prefix can be omitted.
+
     - `state: Object` An object to initial model state
-    - `reducers?: Object`: Key is the action type, and value is the reducer function.
-    - `effects?: Object`: Key is the action type, and value is the worker saga. The watcher saga treat these effects in `takeEvery` way.
-    - `latests?: Object`: Same as `effects` but in `takeLatest` way.
-    - `leadings?: Object`: Same as `effects` but in `takeLeading` way.
-    - `sagas?: Object`: Write watcher sagas and take full advantage of redux-saga.
-    - `init?: (dispatch: (action: Object), onError: (error: Error))`: If provided, it will be called on model initial.
+    - `reducers?: Object` Key is the action type, and value is the reducer function.
+    - `effects?: Object` Key is the action type, and value is the worker saga. The watcher saga treat these effects in `takeEvery` way.
+    - `latests?: Object` Same as `effects` but in `takeLatest` way.
+    - `leadings?: Object` Same as `effects` but in `takeLeading` way.
+    - `sagas?: Object` Write watcher sagas and take full advantage of redux-saga.
+    - `init?: (dispatch: (action: Object), onError: (error: Error))` If provided, it will be called on model initial.
 
-#### Example
+### Models Example
+
+You can omit `namespace` prefix when using `put` from argument.
 
 ```javascript
-// models
+// model
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 export default [
   {
     namespace: 'app',
@@ -46,7 +54,6 @@ export default [
     },
     effects: {
       *increaseAsync(action, { call, put, select }) {
-        const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
         yield call(delay, 1000);
 
         const count = yield select(state => state.app.count);
@@ -56,26 +63,61 @@ export default [
             count: count + 1,
           }
         });
-      }
+      },
     }
   }, 
   // require('./path/to/model').default, 
 ];
 ```
 
-### Options
+### Models Example in Saga Way
 
-- `options?: Object` A list of options, currently supported options are
+`namespace` should be prefixed to action type when using origin `put` from `redux-saga/effects`.
 
-    - `onError: (error: Error)`: If provided, it will be called with uncaught errors from Sagas. Userful for handling exceptions globally
-    - `dispatchError: Boolean`: If enabled, it allows your to catch every single saga error by `dispatch(action).catch()`: Won't work if `onError` is provided
-    - `initialState: Object`: Initial state to be passed to createStore and has to be with same shape as reducers
-    - `onStateChange: (state)`: State change listener, always called after action is dispatched
+```javascript
+// model
+ 
+import { call, put, select } from 'redux-saga/effects';
 
-    - `render`: Pass ReactDOM.render if debug fails.
-    - `Provider`: Pass react-redux's Provider if debug fails.
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-#### Example
+//...
+  effects: {
+    *increaseTwoAsync(action) {
+      yield put({
+        type: 'app/update',
+        payload: { loading: true },
+      });
+      yield call(delay, 1000);
+      yield put({
+        type: 'app/update',
+        payload: { loading: false },
+      });
+  
+      const count = yield select(state => state.app.count);
+      yield put({
+        type: 'app/update',
+        payload: {
+          count: count + 2,
+        }
+      });
+    }
+  }
+```
+
+## Options
+
+- `options?: Object` A list of optional options, currently supported options are
+
+    - `onError: (error: Error)` If provided, it will be called with uncaught errors from Sagas. Userful for handling exceptions globally
+
+    - `dispatchError: Boolean` If enabled, it allows your to catch every single saga error by `dispatch(action).catch()`. Won't work if `onError` is provided
+    - `initialState: Object` Initial state to be passed to createStore and has to be with same shape as reducers
+    - `onStateChange: (state)` State change listener. Always called after action is dispatched
+    - `render` Pass ReactDOM.render for debug
+    - `Provider` Pass react-redux's Provider for debug
+
+### Options Example
 
 ```javascript
 import ReactDOM from 'react-dom';
@@ -93,7 +135,7 @@ const { updateApp, updateModels } = start(
       loadLocalState();
     },
     onStateChange: state => {
-      saveLocalState();
+      saveLocalState(state);
     },
     dispatchError: true,     // won't work if onError is provided
     Provider,                // debug

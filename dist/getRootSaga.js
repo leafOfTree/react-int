@@ -79,7 +79,7 @@ const getRootSaga = (models, config) => {
       }
 
       for (let watcherSaga in sagas) {
-        yield* sagas[watcherSaga]();
+        yield (0, _effects.fork)(sagas[watcherSaga]);
       }
     }
   };
