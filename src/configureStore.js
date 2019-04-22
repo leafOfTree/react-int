@@ -14,12 +14,14 @@ const configureStore = (models, options={}) => {
   const { onStateChange, initialState } = options;
 
   const sagaMiddleware = createSagaMiddleware();
+
   const middlewares = reduxDevTools
     ? compose(
       applyMiddleware(sagaMiddleware, middleware),
       reduxDevTools,
     )
     : applyMiddleware(sagaMiddleware, middleware);
+
   const store = createStore(getReducers(models), initialState, middlewares);
   if (onStateChange) {
     store.subscribe(() => onStateChange(store.getState()));

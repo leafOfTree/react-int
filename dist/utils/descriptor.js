@@ -81,6 +81,18 @@ const modelDescriptor = {
     propType: Function,
     propTypeInfo: 'GeneratorFunction'
   },
+  latests: {
+    type: Object,
+    typeInfo: 'Object',
+    propType: Function,
+    propTypeInfo: 'GeneratorFunction'
+  },
+  leadings: {
+    type: Object,
+    typeInfo: 'Object',
+    propType: Function,
+    propTypeInfo: 'GeneratorFunction'
+  },
   sagas: {
     type: Object,
     typeInfo: 'Object',

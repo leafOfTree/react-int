@@ -33,8 +33,74 @@ export const models = [{
         }
       });
     }
-  }
+  },
 }];
+
+export const invalidModels = {
+  emptyNamespace: [
+    {
+      namespace: '',
+      state: {},
+    }
+  ],
+  noState: [
+    {
+      namespace: 'test',
+    }
+  ],
+  invalidReducers: [
+    {
+      namespace: 'test',
+      state: {},
+      reducers: {
+        count: 1,
+      },
+    },
+  ],
+  invalidEffects: [
+    {
+      namespace: 'test',
+      state: {},
+      effects: {
+        count: 1,
+      },
+    },
+  ],
+  invalidLatests: [
+    {
+      namespace: 'test',
+      state: {},
+      latests: {
+        count: 1,
+      },
+    },
+  ],
+  invalidLeadings: [
+    {
+      namespace: 'test',
+      state: {},
+      leadings: {
+        count: 1,
+      },
+    },
+  ],
+  invalidSagas: [
+    {
+      namespace: 'test',
+      state: {},
+      sagas: {
+        count: 1,
+      },
+    },
+  ],
+  invalidInit: [
+    {
+      namespace: 'test',
+      state: {},
+      init: {},
+    },
+  ],
+}
 
 export const options = {
   initialState: {

@@ -1,4 +1,4 @@
-import { call, put, select, takeEvery } from 'redux-saga/effects';
+import { call, put, select, takeEvery, takeLatest, takeLeading } from 'redux-saga/effects';
 
 const putWithNamespace = (put, namespace) => {
   return action => {
@@ -15,11 +15,11 @@ const putWithNamespace = (put, namespace) => {
 const effectWrapper = (effect, effectCreators, config) => {
   return function* (action) {
     try {
-      const ret = yield* effect(action, effectCreators);
-      action.promise && action.promise.resolve(ret);
+      const returnValue = yield* effect(action, effectCreators);
+      action.promise && action.promise.resolve(returnValue);
     } catch (e) {
       const { onError, dispatchError } = config;
-      if (onError && typeof onError === 'function') {
+      if (onError && (typeof onError === 'function')) {
         onError(e);
       } else if (dispatchError) {
         action.promise && action.promise.reject(e);
@@ -33,27 +33,38 @@ const effectWrapper = (effect, effectCreators, config) => {
 const getRootSaga = (models, config) => {
   return function* () {
     let model;
-    let type;
     let workerSaga;
 
     for (let i = 0; i < models.length; i++) {
       model = models[i];
-      const { namespace, effects, sagas } = model;
-      if (effects) {
-        const effectCreators = {
-          call,
-          select,
-          put: putWithNamespace(put, namespace),
-        };
+      const { namespace, effects, leadings, latests, sagas } = model;
 
-        for (let type in effects) {
-          workerSaga = effectWrapper(effects[type], effectCreators, config);
-          yield takeEvery(`${namespace}/${type}`, workerSaga);
-        }
+      const effectCreators = {
+        call,
+        select,
+        put: putWithNamespace(put, namespace),
+      };
+
+      for (let type in effects) {
+        workerSaga = effectWrapper(effects[type], effectCreators, config);
+        yield takeEvery(`${namespace}/${type}`, workerSaga);
+      }
+
+      for (let type in leadings) {
+        workerSaga = effectWrapper(leadings[type], effectCreators, config);
+        yield takeLeading(`${namespace}/${type}`, workerSaga);
+      }
+
+      for (let type in latests) {
+        workerSaga = effectWrapper(latests[type], effectCreators, config);
+        yield takeLatest(`${namespace}/${type}`, workerSaga);
+      }
+
+      for (let watcherSaga in sagas) {
+        yield* sagas[watcherSaga]();
       }
     }
   }
-  ;
 }
 
 export default getRootSaga;

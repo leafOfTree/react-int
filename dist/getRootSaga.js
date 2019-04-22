@@ -24,8 +24,8 @@ const putWithNamespace = (put, namespace) => {
 const effectWrapper = (effect, effectCreators, config) => {
   return function* (action) {
     try {
-      const ret = yield* effect(action, effectCreators);
-      action.promise && action.promise.resolve(ret);
+      const returnValue = yield* effect(action, effectCreators);
+      action.promise && action.promise.resolve(returnValue);
     } catch (e) {
       const {
         onError,
@@ -46,7 +46,6 @@ const effectWrapper = (effect, effectCreators, config) => {
 const getRootSaga = (models, config) => {
   return function* () {
     let model;
-    let type;
     let workerSaga;
 
     for (let i = 0; i < models.length; i++) {
@@ -54,20 +53,33 @@ const getRootSaga = (models, config) => {
       const {
         namespace,
         effects,
+        leadings,
+        latests,
         sagas
       } = model;
+      const effectCreators = {
+        call: _effects.call,
+        select: _effects.select,
+        put: putWithNamespace(_effects.put, namespace)
+      };
 
-      if (effects) {
-        const effectCreators = {
-          call: _effects.call,
-          select: _effects.select,
-          put: putWithNamespace(_effects.put, namespace)
-        };
+      for (let type in effects) {
+        workerSaga = effectWrapper(effects[type], effectCreators, config);
+        yield (0, _effects.takeEvery)(`${namespace}/${type}`, workerSaga);
+      }
 
-        for (let type in effects) {
-          workerSaga = effectWrapper(effects[type], effectCreators, config);
-          yield (0, _effects.takeEvery)(`${namespace}/${type}`, workerSaga);
-        }
+      for (let type in leadings) {
+        workerSaga = effectWrapper(leadings[type], effectCreators, config);
+        yield (0, _effects.takeLeading)(`${namespace}/${type}`, workerSaga);
+      }
+
+      for (let type in latests) {
+        workerSaga = effectWrapper(latests[type], effectCreators, config);
+        yield (0, _effects.takeLatest)(`${namespace}/${type}`, workerSaga);
+      }
+
+      for (let watcherSaga in sagas) {
+        yield* sagas[watcherSaga]();
       }
     }
   };

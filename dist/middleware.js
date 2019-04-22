@@ -5,9 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _effects = require("redux-saga/effects");
-
-const defer = () => {
+const deferPromise = () => {
   let tmpResolve;
   let tmpReject;
   const promise = new Promise((resolve, reject) => {
@@ -21,7 +19,7 @@ const defer = () => {
 
 const middleware = store => next => action => {
   next(action);
-  action.promise = defer();
+  action.promise = deferPromise();
   return action.promise;
 };
 

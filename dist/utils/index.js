@@ -7,12 +7,16 @@ exports.validModels = exports.validConfig = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _configDescriptor = _interopRequireDefault(require("./configDescriptor"));
+var _descriptor = require("./descriptor");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+const isMatchType = (value, type, typeInfo) => {
+  return value instanceof type || typeof value === typeInfo;
+};
+
 const validConfigKey = (key, value) => {
-  const descriptor = _configDescriptor.default[key];
+  const descriptor = _descriptor.configDescriptor[key];
   const {
     type,
     typeInfo
@@ -22,7 +26,7 @@ const validConfigKey = (key, value) => {
   if (key === 'App') {
     valid = value instanceof type || value.type && value.type.name === 'ConnectFunction';
   } else {
-    valid = value instanceof type || typeof value === typeInfo;
+    valid = isMatchType(value, type, typeInfo);
   }
 
   if (!valid) {
@@ -30,15 +34,37 @@ const validConfigKey = (key, value) => {
   }
 };
 
+const validModelKey = (key, value) => {
+  const descriptor = _descriptor.modelDescriptor[key];
+  const {
+    type,
+    typeInfo,
+    propType,
+    propTypeInfo
+  } = descriptor;
+
+  if (!isMatchType(value, type, typeInfo)) {
+    throw new Error(`Model.${key} type should be ${typeInfo}, but got ${typeof value}.`);
+  }
+
+  if (propType) {
+    for (let p in value) {
+      if (!isMatchType(value[p], propType, propTypeInfo)) {
+        throw new Error(`Model.${key} prop '${p}' type should be ${propTypeInfo}, but got ${typeof value[p]}.`);
+      }
+    }
+  }
+};
+
 const validConfig = config => {
   for (let key in config) {
-    if (!_configDescriptor.default[key]) {
+    if (!_descriptor.configDescriptor[key]) {
       throw new Error(`Unrecognised key: ${key}`);
     }
   }
 
-  for (let key in _configDescriptor.default) {
-    if (_configDescriptor.default[key].required && config[key] === undefined) {
+  for (let key in _descriptor.configDescriptor) {
+    if (_descriptor.configDescriptor[key].required && config[key] === undefined) {
       throw new Error(`Missing argument: ${key}`);
     }
   }
@@ -61,35 +87,23 @@ const validModels = models => {
     } = model;
 
     if (!namespace) {
-      throw new Error('model.namespace is required');
+      throw new Error('Model.namespace is required');
     }
 
-    if (reducers) {
-      if (!reducers instanceof Object) {
-        throw new Error('model.reducers type should be Object');
-      }
-
-      for (let p in reducers) {
-        if (!(reducers[p] instanceof Function)) {
-          throw new Error('model.reducers value type should be Function');
-        }
+    for (let key in _descriptor.modelDescriptor) {
+      if (_descriptor.modelDescriptor[key].required && model[key] === undefined) {
+        throw new Error(`Model ${namespace} has missing key: ${key}`);
       }
     }
 
-    if (effects) {
-      if (!effects instanceof Object) {
-        throw new Error('model.effects value type should be Object');
-      }
-
-      for (let p in effects) {
-        if (!(effects[p] instanceof Function)) {
-          throw new Error('model.effects value type should be Function/Generator');
-        }
+    for (let key in model) {
+      if (!_descriptor.modelDescriptor[key]) {
+        throw new Error(`Model ${namespace} has unrecognized key: ${key}`);
       }
     }
 
-    if (init && !(init instanceof Function)) {
-      throw new Error('init value type should be Function');
+    for (let key in model) {
+      validModelKey(key, model[key]);
     }
   });
 };

@@ -1,21 +1,21 @@
-const configDescriptor = {
+export const configDescriptor = {
   App: {
+    required: true,
     description: 'App component to be rendered',
     type: Function,
     typeInfo: 'React Component class or function',
-    required: true,
   },
   root: {
+    required: true,
     description: 'DOM container to render into',
     type: HTMLElement,
     typeInfo: 'HTMLElement',
-    required: true,
   },
   models: {
+    required: true,
     description: 'Models user defines. The element structor is { namespace, state, reducers, effects, init }',
     type: Array,
     typeInfo: 'Array',
-    required: true,
   },
   Provider: {
     description: 'Provider from react-redux which is useful for debug',
@@ -50,4 +50,51 @@ const configDescriptor = {
   }
 }
 
-export default configDescriptor;
+export const modelDescriptor = {
+  namespace: {
+    reuired: true,
+    description: 'Identity',
+    type: String,
+    typeInfo: 'string',
+  },
+  state: {
+    required: true,
+    description: 'Initial state',
+    type: Object,
+    typeInfo: 'Object',
+  },
+  reducers: {
+    type: Object,
+    typeInfo: 'Object',
+    propType: Function,
+    propTypeInfo: 'Function',
+  },
+  effects: {
+    type: Object,
+    typeInfo: 'Object',
+    propType: Function,
+    propTypeInfo: 'GeneratorFunction',
+  },
+  latests: {
+    type: Object,
+    typeInfo: 'Object',
+    propType: Function,
+    propTypeInfo: 'GeneratorFunction',
+  },
+  leadings: {
+    type: Object,
+    typeInfo: 'Object',
+    propType: Function,
+    propTypeInfo: 'GeneratorFunction',
+  },
+  sagas: {
+    type: Object,
+    typeInfo: 'Object',
+    propType: Function,
+    propTypeInfo: 'GeneratorFunction',
+  },
+  init: {
+    type: Function,
+    typeInfo: 'Function',
+  },
+}

@@ -1,5 +1,9 @@
 import React from 'react';
-import configDescriptor from './configDescriptor';
+import { configDescriptor, modelDescriptor } from './descriptor';
+
+const isMatchType = (value, type, typeInfo) => {
+  return (value instanceof type) || (typeof value === typeInfo);
+}
 
 const validConfigKey = (key, value) => {
   const descriptor = configDescriptor[key];
@@ -10,13 +14,34 @@ const validConfigKey = (key, value) => {
     valid = value instanceof type
       || (value.type && value.type.name === 'ConnectFunction')
   } else {
-    valid = (value instanceof type) || (typeof value === typeInfo);
+    valid = isMatchType(value, type, typeInfo);
   }
 
   if (!valid) {
     throw new Error(
       `${key} type should be ${typeInfo}, but got ${typeof value}.`
     );
+  }
+}
+
+const validModelKey = (key, value) => {
+  const descriptor = modelDescriptor[key];
+  const { type, typeInfo, propType, propTypeInfo } = descriptor;
+
+  if (!isMatchType(value, type, typeInfo)) {
+    throw new Error(
+      `Model.${key} type should be ${typeInfo}, but got ${typeof value}.`
+    );
+  }
+
+  if (propType) {
+    for (let p in value) {
+      if (!isMatchType(value[p], propType, propTypeInfo)) {
+        throw new Error(
+          `Model.${key} prop '${p}' type should be ${propTypeInfo}, but got ${typeof value[p]}.`
+        );
+      }
+    }
   }
 }
 
@@ -41,34 +66,25 @@ export const validConfig = config => {
 export const validModels = models => {
   models.forEach(model => {
     const { namespace, state, reducers, effects, init } = model;
+
     if (!namespace) {
-      throw new Error('model.namespace is required');
+      throw new Error('Model.namespace is required');
     }
 
-    if (reducers) {
-      if (!reducers instanceof Object) {
-        throw new Error('model.reducers type should be Object');
-      }
-      for (let p in reducers) {
-        if (!(reducers[p] instanceof Function)) {
-          throw new Error('model.reducers value type should be Function');
-        }
+    for (let key in modelDescriptor) {
+      if (modelDescriptor[key].required && model[key] === undefined) {
+        throw new Error(`Model ${namespace} has missing key: ${key}`);
       }
     }
 
-    if (effects) {
-      if (!effects instanceof Object) {
-        throw new Error('model.effects value type should be Object');
-      }
-      for (let p in effects) {
-        if (!(effects[p] instanceof Function)) {
-          throw new Error('model.effects value type should be Function/Generator');
-        }
+    for (let key in model) {
+      if (!modelDescriptor[key]) {
+        throw new Error(`Model ${namespace} has unrecognized key: ${key}`);
       }
     }
 
-    if (init && !(init instanceof Function)) {
-      throw new Error('init value type should be Function');
+    for (let key in model) {
+      validModelKey(key, model[key]);
     }
   })
 }
