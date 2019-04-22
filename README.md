@@ -9,7 +9,7 @@ A simple way to use [react][0] with [react-redux][1] and [redux-saga][2]. Keep m
 - Key as action type. (Convenient)
 - HMR everywhere. (Need extra code snippets)
 - Promisified dispatch.
-- Handling Effect error without terminating app.
+- Handles Effect errors without terminating app.
 - Works with [create-react-app][4].
 
 ## How it works
