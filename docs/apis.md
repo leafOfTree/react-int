@@ -20,7 +20,7 @@
 
     model properties are
 
-    - `namespace: String` An identify to shape state to small ones with the namespace as key. `namespace` should be prefixed to action type as `namespace/type` in `dispatch` and `put`. If `dispatch` or `put` is provided by `react-int` function argument, prefix can be omitted.
+    - `namespace: String` An identify which is used as key to shape state to small ones. It should be prefixed to action type as `namespace/type` in `dispatch` and `put`. If `dispatch` or `put` is provided by `react-int` function argument, the prefix can be omitted.
 
     - `state: Object` An object to initial model state
     - `reducers?: Object` Key is the action type, and value is the reducer function.
@@ -32,7 +32,7 @@
 
 ### Models Example
 
-You can omit `namespace` prefix when using `put` from argument.
+`namespace` prefix can be omitted when using `put` from argument.
 
 ```javascript
 // model
@@ -74,9 +74,10 @@ export default [
 
 `namespace` should be prefixed to action type when using origin `put` from `redux-saga/effects`.
 
+It is possible to build complex control flow by `take` and `put`. See [redux-saga: Pulling future actions][0] for more details.
+
 ```javascript
 // model
- 
 import { call, put, select } from 'redux-saga/effects';
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -84,15 +85,7 @@ const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 //...
   effects: {
     *increaseTwoAsync(action) {
-      yield put({
-        type: 'app/update',
-        payload: { loading: true },
-      });
       yield call(delay, 1000);
-      yield put({
-        type: 'app/update',
-        payload: { loading: false },
-      });
   
       const count = yield select(state => state.app.count);
       yield put({
@@ -102,16 +95,38 @@ const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
         }
       });
     }
-  }
+  },
+  sagas: {
+    *watchAndLog() {
+      while(true) {
+        const action = yield take('*');
+        const state = yield select();
+
+        console.log('action', action);
+        console.log('state after', state);
+      }
+    },
+    *loginFlow() {
+      while(true) {
+        yield take('app/login');
+        // ... perfom the login logic
+
+        yield take('app/logout');
+
+        // ... perform the logout logic
+      }
+    },
+  },
+  
 ```
 
 ## Options
 
-- `options?: Object` A list of optional options, currently supported options are
+- `options?: Object` A list of optional options. Currently supported options are
 
     - `onError: (error: Error)` If provided, it will be called with uncaught errors from Sagas. Userful for handling exceptions globally
 
-    - `dispatchError: Boolean` If enabled, it allows your to catch every single saga error by `dispatch(action).catch()`. Won't work if `onError` is provided
+    - `dispatchError: Boolean` If enabled, it allows your to catch each saga error by `dispatch().catch()`. It won't work if `onError` is provided
     - `initialState: Object` Initial state to be passed to createStore and has to be with same shape as reducers
     - `onStateChange: (state)` State change listener. Always called after action is dispatched
     - `render` Pass ReactDOM.render for debug
@@ -131,15 +146,13 @@ const { updateApp, updateModels } = start(
     onError: e => {
       console.error('onError', e);
     },
-    initialState: {
-      loadLocalState();
-    },
+    initialState: loadLocalState(), 
     onStateChange: state => {
       saveLocalState(state);
     },
     dispatchError: true,     // won't work if onError is provided
-    Provider,                // debug
-    render: ReactDOM.render, // debug
+    Provider,                // for debug
+    render: ReactDOM.render, // for debug
   }
 );
 ```
@@ -173,3 +186,5 @@ if (module.hot && process.env.NODE_ENV !== 'production') {
   });
 }
 ```
+
+[0]: https://redux-saga.js.org/docs/advanced/FutureActions.html
