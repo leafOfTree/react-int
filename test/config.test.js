@@ -1,6 +1,6 @@
 import configureStore from '../src/configureStore';
 import { validateConfig } from '../src/utils';
-import { 
+import {
   models, invalidModels, options, conflictOptions, mockCount,
 } from './data';
 
