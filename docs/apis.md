@@ -1,6 +1,6 @@
 # APIs
 
-## start(App, root, models, options?) => Object
+## start: (App, root, models, options?) => Object
 
 `start` function renders App and creates store.
 
@@ -24,7 +24,8 @@
 
     - `state: Object` An object to initial model state
     - `reducers?: Object` Key is the action type, and value is the reducer function.
-    - `effects?: Object` Key is the action type, and value is the worker saga. The watcher saga treat these effects in `takeEvery` way.
+    - `effects?: Object` Key is the action type, and value is the worker saga. The watcher saga treat these effects in `takeEvery` way. This is different from the effects concept of redux-saga.
+
     - `latests?: Object` Same as `effects` but in `takeLatest` way.
     - `leadings?: Object` Same as `effects` but in `takeLeading` way.
     - `sagas?: Object` Write watcher sagas and take full advantage of redux-saga.
@@ -112,7 +113,6 @@ const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
         // ... perfom the login logic
 
         yield take('app/logout');
-
         // ... perform the logout logic
       }
     },
@@ -161,9 +161,9 @@ const { updateApp, updateModels } = start(
 
 `start` function is expected to return an object with `updateApp`, `updateModels` methods. They can be used to enable HMR.
 
-- `updateApp: ()`
+- `updateApp: (App: Class | Function)`
 
-- `updateModels: ()`
+- `updateModels: (models: Array)`
 
 #### Example
 

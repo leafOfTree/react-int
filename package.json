@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest --watch",
     "start": "nodemon --watch src --exec babel src --out-dir dist",
-    "build": "babel src --out-dir dist"
+    "build": "babel src --out-dir dist",
+    "doc": "docsify serve docs"
   },
   "keywords": [
     "react",
