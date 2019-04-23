@@ -7,7 +7,8 @@
     "test": "jest --watch",
     "start": "nodemon --watch src --exec babel src --out-dir dist",
     "build": "babel src --out-dir dist",
-    "doc": "docsify serve docs"
+    "doc": "docsify serve docs",
+    "lint": "eslint ./src"
   },
   "keywords": [
     "react",
@@ -24,6 +25,8 @@
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
     "babel-jest": "^24.7.1",
+    "eslint": "^5.16.0",
+    "eslint-plugin-react": "^7.12.4",
     "jest": "^24.7.1",
     "nodemon": "^1.18.11",
     "react": "^16.8.6",
