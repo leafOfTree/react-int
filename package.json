@@ -10,6 +10,10 @@
     "doc": "docsify serve docs",
     "lint": "eslint src"
   },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "keywords": [
     "react",
     "redux",
