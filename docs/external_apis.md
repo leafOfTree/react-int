@@ -45,11 +45,56 @@ The store's reducing function will be called with the current `state` and the gi
 
 > `put(action)` will finally trigger `dispatch(action)`.
 
+###  this.props.dispatch()
+
+After `connect()`, `dispatch` will be mapped to the new wrapper component prop and can be used as `this.props.dispatch(actoin)`.
+
+### return Promise
+
+`react-int` changes `dispatch` return value from action to a Promise, which resolves with effects return value.
+
+### Example
+
+```javascript
+class App extends Component {
+  login = () => {
+    this.props.dispatch({
+      type: 'app/login',
+      payload: {
+        username,
+        password,
+      },
+    }).then(res => {
+      if (res && res.status === 'ok') {
+        console.log('login success');
+      }
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        <div>App: {this.props.name}</div>
+        <button onClick={this.login}>Login</button>
+      </div>
+    );
+  }
+}
+
+const mapStateToProp = state => {
+  return {
+    name: state.app.name
+  };
+};
+
+export default connect(mapStateToProp)(App);
+```
+
 ## action
 
 `action: Object` A plain object describing the change to store.
 
-- `type: String`:  By convenience, the `type` is used to trigger corresponding reducer function.
+- `type: String`:  By convenience, the `type` is used to trigger corresponding reducer/effect function.
 
 See [Redux dispatch(action)][1] for details.
 
@@ -95,6 +140,35 @@ If no argument is provided, `yield select()` will be resolved with the entire st
 
 - `pattern: empty |'*'| (action) => Boolean | String | Array` It is interpreted using different rules on specific type.
 
+### Example
+
+```javascript
+// model
+  effects: {
+    *increaseTwoAsync(action) {
+      yield call(delay, 1000);
+
+      const count = yield select(state => state.app.count);
+      yield put({
+        type: 'app/update',
+        payload: {
+          count: count + 2,
+        }
+      });
+    }
+  },
+  sagas: {
+    *watchAndLog() {
+      while(true) {
+        const action = yield take('*');
+        const state = yield select();
+        console.log('action', action);
+        console.log('state after', state);
+      }
+    },
+  }
+
+```
 
 [0]: https://react-redux.js.org/api/connect
 [1]: https://redux.js.org/api/store#a-id-dispatch-class-anchor-a-dispatchaction-dispatch
