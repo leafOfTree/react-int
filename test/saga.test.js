@@ -14,37 +14,63 @@ const store = createStore(
   applyMiddleware(sagaMiddlware, middleware),
 );
 
-describe('model effects', () => {
+sagaManager.startSagas(sagaMiddlware, models);
+
+describe('model', () => {
   test('watcher saga', () => {
     const rootSaga = getRootSaga(models);
     const gen = rootSaga();
-    const state = store.getState();
 
     expect(getActionType(gen.next().value)).toEqual(
       getActionType(takeEvery('test/fetch', function* () {}))
     )
     expect(getActionType(gen.next().value)).toEqual(
-      getActionType(takeEvery('test/save', function* () {}))
+      getActionType(takeEvery('test/increaseAsync', function* () {}))
     )
   });
 
-  test('worker saga', () => {
-    sagaManager.startSagas(sagaMiddlware, models);
-
-    store.dispatch({
-      type: 'test/save'
+  test('effects', async () => {
+    await store.dispatch({
+      type: 'test/increaseAsync'
     });
-    store.dispatch({
-      type: 'test/save'
+    await store.dispatch({
+      type: 'test/increaseAsync'
     });
 
     const state = store.getState();
-    expect(state.test.count).toBe(2);
+    expect(state).toEqual(mockCount(2));
+  })
+
+  test('leadings', async () => {
+    await Promise.race([
+      store.dispatch({
+        type: 'test/increaseTwoAsync'
+      }),
+      store.dispatch({
+        type: 'test/increaseTwoAsync'
+      })
+    ])
+
+    const state = store.getState();
+    expect(state).toEqual(mockCount(4));
+  })
+
+  test('latests', () => {
+    expect.assertions(1);
+
+    store.dispatch({
+      type: 'test/increaseThreeAsync'
+    }).then(result => {});
+
+    return store.dispatch({
+      type: 'test/increaseThreeAsync'
+    }).then(result => {
+      const state = store.getState();
+      expect(state).toEqual(mockCount(7));
+    });
   })
 
   test('saga action returns promise when dispatched', async () => {
-    sagaManager.startSagas(sagaMiddlware, models);
-
     const result = await store.dispatch({
       type: 'test/fetch'
     });

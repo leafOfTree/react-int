@@ -18,12 +18,12 @@ var _utils = require("./utils");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const start = (App, root, models, options) => {
-  (0, _utils.validConfig)({
+  (0, _utils.validateConfig)({
     App,
     root,
     models,
     ...options
-  }); // options.Provider is useful for debug
+  }); // useful for debug
 
   const ReduxProvider = options && options.Provider || _reactRedux.Provider;
   const domRender = options && options.render || _reactDom.default.render;

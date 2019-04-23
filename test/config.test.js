@@ -1,9 +1,20 @@
 import configureStore from '../src/configureStore';
-import { models, invalidModels, options, mockCount } from './data';
+import { validateConfig } from '../src/utils';
+import { 
+  models, invalidModels, options, conflictOptions, mockCount,
+} from './data';
 
-describe('assert config, models, options', () => {
+describe('assert config, models', () => {
   test('assert valid model', () => {
     const { store } = configureStore(models, options);
+  })
+
+  test('assert conflict options', () => {
+    try {
+      validateConfig(conflictOptions);
+    } catch (e) {
+      expect(e).toEqual(new Error('Conflict options, only one can be enabled: onError, dispatchError'));
+    }
   })
 
   test('assert model missing key', () => {
@@ -55,6 +66,12 @@ describe('assert config, models, options', () => {
       const { store } = configureStore(invalidModels.invalidInit);
     } catch (e) {
       expect(e).toEqual(new Error('Model.init type should be Function, but got object.'));
+    }
+
+    try {
+      const { store } = configureStore(invalidModels.dumplicateNamespace);
+    } catch (e) {
+      expect(e).toEqual(new Error("Model.namespace should be unique, but found dumplicate 'test'"));
     }
   })
 })

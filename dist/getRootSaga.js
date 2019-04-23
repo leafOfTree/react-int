@@ -39,6 +39,9 @@ const effectWrapper = (effect, effectCreators, config) => {
       } else {
         console.error(e);
       }
+    } finally {
+      if (yield (0, _effects.cancelled)()) {// Action is cancelled
+      }
     }
   };
 };

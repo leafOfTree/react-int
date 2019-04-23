@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import configureStore from './configureStore';
-import { validConfig } from './utils';
+import { validateConfig } from './utils';
 
 const start = (App, root, models, options) => {
-  validConfig({ App, root, models, ...options });
+  validateConfig({ App, root, models, ...options });
 
-  // options.Provider is useful for debug
+  // useful for debug
   const ReduxProvider = (options && options.Provider) || Provider;
   const domRender = (options && options.render) || ReactDOM.render;
 

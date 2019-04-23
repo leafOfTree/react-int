@@ -1,5 +1,6 @@
 import {
-  call, put, select, fork, takeEvery, takeLatest, takeLeading 
+  call, put, select, fork, takeEvery, takeLatest, takeLeading,
+  cancelled,
 } from 'redux-saga/effects';
 
 const putWithNamespace = (put, namespace) => {
@@ -27,6 +28,10 @@ const effectWrapper = (effect, effectCreators, config) => {
         action.promise && action.promise.reject(e);
       } else {
         console.error(e);
+      }
+    } finally {
+      if (yield cancelled()) {
+        // Action is cancelled
       }
     }
   };

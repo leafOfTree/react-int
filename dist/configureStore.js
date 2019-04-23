@@ -24,7 +24,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 const reduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
 
 const configureStore = (models, options = {}) => {
-  (0, _utils.validModels)(models);
+  (0, _utils.validateModels)(models);
   const {
     onStateChange,
     initialState
@@ -42,12 +42,12 @@ const configureStore = (models, options = {}) => {
   (0, _handleModels.default)(models, store, options);
 
   const updateReducer = models => {
-    (0, _utils.validModels)(models);
+    (0, _utils.validateModels)(models);
     store.replaceReducer((0, _getReducers.default)(models));
   };
 
   const updateSaga = models => {
-    (0, _utils.validModels)(models);
+    (0, _utils.validateModels)(models);
 
     _sagaManager.default.cancelSagas(store);
 

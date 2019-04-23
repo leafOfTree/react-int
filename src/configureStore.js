@@ -4,13 +4,13 @@ import getReducers from './getReducers';
 import sagaManager from './sagaManager';
 import handleModels from './handleModels';
 import middleware from './middleware';
-import { validModels } from './utils';
+import { validateModels } from './utils';
 
 const reduxDevTools =
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
 
 const configureStore = (models, options={}) => {
-  validModels(models);
+  validateModels(models);
   const { onStateChange, initialState } = options;
 
   const sagaMiddleware = createSagaMiddleware();
@@ -30,11 +30,11 @@ const configureStore = (models, options={}) => {
   handleModels(models, store, options);
 
   const updateReducer = models => {
-    validModels(models);
+    validateModels(models);
     store.replaceReducer(getReducers(models));
   };
   const updateSaga = models => {
-    validModels(models);
+    validateModels(models);
     sagaManager.cancelSagas(store);
     sagaManager.startSagas(sagaMiddleware, models, options);
   };

@@ -1,3 +1,5 @@
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 export const models = [{
   namespace: 'test',
   state: {
@@ -19,17 +21,42 @@ export const models = [{
   },
   effects: {
     *fetch(action, { call, put, select }) {
-      const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
       const params = action.payload ? action.payload.params : 10;
       yield call(delay, params);
       return 'fetch return value';
     },
-    *save(action, { call, put, select }) {
+    *increaseAsync(action, { call, put, select }) {
       const state = yield select(state => state.test);
       yield put({
         type: 'update',
         payload: {
           count: ++state.count,
+        }
+      });
+    }
+  },
+  leadings: {
+    *increaseTwoAsync(action, { call, put, select }) {
+      yield call(delay, 500);
+
+      const state = yield select(state => state.test);
+      yield put({
+        type: 'update',
+        payload: {
+          count: state.count + 2,
+        }
+      });
+    }
+  },
+  latests: {
+    *increaseThreeAsync(action, { call, put, select }) {
+      yield call(delay, 500);
+
+      const state = yield select(state => state.test);
+      yield put({
+        type: 'update',
+        payload: {
+          count: state.count + 3,
         }
       });
     }
@@ -93,6 +120,16 @@ export const invalidModels = {
       },
     },
   ],
+  dumplicateNamespace: [
+    {
+      namespace: 'test',
+      state: {},
+    },
+    {
+      namespace: 'test',
+      state: {},
+    },
+  ],
   invalidInit: [
     {
       namespace: 'test',
@@ -110,8 +147,23 @@ export const options = {
   },
 }
 
+export const conflictOptions = {
+  App: () => {},
+  root: () => {},
+  models: [],
+  initialState: {
+    test: {
+      count: 10,
+    },
+  },
+  onError: e => {
+    console.error(e);
+  },
+  dispatchError: true,
+}
+
 export const mockCount = (count) => ({
   test: {
-    count: count,
+    count,
   },
 });

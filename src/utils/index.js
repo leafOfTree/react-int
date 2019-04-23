@@ -5,7 +5,7 @@ const isMatchType = (value, type, typeInfo) => {
   return (value instanceof type) || (typeof value === typeInfo);
 }
 
-const validConfigKey = (key, value) => {
+const validateateConfigKey = (key, value) => {
   const descriptor = configDescriptor[key];
   const { type, typeInfo } = descriptor;
 
@@ -24,7 +24,7 @@ const validConfigKey = (key, value) => {
   }
 }
 
-const validModelKey = (key, value) => {
+const validateModelKey = (key, value) => {
   const descriptor = modelDescriptor[key];
   const { type, typeInfo, propType, propTypeInfo } = descriptor;
 
@@ -45,7 +45,16 @@ const validModelKey = (key, value) => {
   }
 }
 
-export const validConfig = config => {
+const validateUniqueNamespace = models => {
+  const namespaces = models.map(({ namespace }) => namespace);
+  namespaces.forEach((namespace, index) => {
+    if (namespaces.indexOf(namespace) !== index) {
+      throw new Error(`Model.namespace should be unique, but found dumplicate '${namespace}'`)
+    }
+  })
+}
+
+export const validateConfig = config => {
   for (let key in config) {
     if (!configDescriptor[key]) {
       throw new Error(`Unrecognised key: ${key}`);
@@ -58,12 +67,18 @@ export const validConfig = config => {
     }
   }
 
+  if ((config.onError !== undefined) && (config.dispatchError !== undefined)) {
+    throw new Error('Conflict options, only one can be enabled: onError, dispatchError')
+  }
+
   for (let key in config) {
-    validConfigKey(key, config[key]);
+    validateateConfigKey(key, config[key]);
   }
 }
 
-export const validModels = models => {
+export const validateModels = models => {
+  validateUniqueNamespace(models);
+
   models.forEach(model => {
     const { namespace, state, reducers, effects, init } = model;
 
@@ -84,7 +99,7 @@ export const validModels = models => {
     }
 
     for (let key in model) {
-      validModelKey(key, model[key]);
+      validateModelKey(key, model[key]);
     }
   })
 }
