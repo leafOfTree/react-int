@@ -27,6 +27,7 @@ const effectWrapper = (effect, effectCreators, config) => {
       } else if (dispatchError) {
         action.promise && action.promise.reject(e);
       } else {
+        // eslint-disable-next-line no-console
         console.error(e);
       }
     } finally {

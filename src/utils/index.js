@@ -1,4 +1,3 @@
-import React from 'react';
 import { configDescriptor, modelDescriptor } from './descriptor';
 
 const isMatchType = (value, type, typeInfo) => {
@@ -80,7 +79,7 @@ export const validateModels = models => {
   validateUniqueNamespace(models);
 
   models.forEach(model => {
-    const { namespace, state, reducers, effects, init } = model;
+    const { namespace } = model;
 
     if (!namespace) {
       throw new Error('Model.namespace is required');

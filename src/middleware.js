@@ -10,6 +10,7 @@ const deferPromise = () => {
   return promise;
 }
 
+// eslint-disable-next-line no-unused-vars
 const middleware = store => next => action => {
   next(action);
 
