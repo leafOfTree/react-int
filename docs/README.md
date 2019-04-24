@@ -29,8 +29,8 @@ Start app, write models and connect components. That's all.
 
 ```javascript
 import start from "react-int";
-import models from "./models";
 import App from "./App";
+import models from "./models";
 
 const { updateApp, updateModels } = start(
   App,
@@ -40,14 +40,9 @@ const { updateApp, updateModels } = start(
 );
 
 // enable HMR
-if (module.hot && process.env.NODE_ENV !== "production") {
-  module.hot.accept("./App", () => {
-    updateApp(App);
-  });
-
-  module.hot.accept("./models", () => {
-    updateModels(models);
-  });
+if (module.hot && process.env.NODE_ENV !== 'production') {
+  module.hot.accept('./App', () => updateApp(App));
+  module.hot.accept('./models', () => updateModels(models));
 }
 ```
 

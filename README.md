@@ -15,7 +15,7 @@ A simple way to use [react][0] with [react-redux][1] and [redux-saga][2]. Keep m
 - Reducers and sagas in one file.
 - Namespace.
 - Key as action type. (Convenient)
-- HMR everywhere. (Need extra code snippets)
+- HMR everywhere. (Need extra code snippet)
 - Promisified dispatch.
 - Handles Effect errors without terminating app.
 - Works with [create-react-app][4].
@@ -37,8 +37,8 @@ Start app, write models and connect components. That's all. :tada:
 
 ```javascript
 import start from "react-int";
-import models from "./models";
 import App from "./App";
+import models from "./models";
 
 const { updateApp, updateModels } = start(
   App,
@@ -48,14 +48,9 @@ const { updateApp, updateModels } = start(
 );
 
 // enable HMR
-if (module.hot && process.env.NODE_ENV !== "production") {
-  module.hot.accept("./App", () => {
-    updateApp(App);
-  });
-
-  module.hot.accept("./models", () => {
-    updateModels(models);
-  });
+if (module.hot && process.env.NODE_ENV !== 'production') {
+  module.hot.accept('./App', () => updateApp(App));
+  module.hot.accept('./models', () => updateModels(models));
 }
 ```
 
