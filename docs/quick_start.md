@@ -166,7 +166,7 @@ export default connect(state => ({
 
 ## Result
 
-After `npm start`, <http://localhost:3000> should look like <https://61wpmyj04r.codesandbox.io/> if everything goes well.
+After `npm start`, <http://localhost:3000> should look like <https://csb-61wpmyj04r.netlify.com/> if everything goes well.
 
 [0]: https://github.com/facebook/react
 [1]: https://github.com/reduxjs/react-redux
