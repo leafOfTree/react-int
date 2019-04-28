@@ -22,13 +22,19 @@
 
     - `namespace: String` An identify which is used as key to shape state to small ones. It should be prefixed to action type as `namespace/type` in `dispatch` and `put`. If `dispatch` or `put` is provided by `react-int` function argument, the prefix can be omitted.
 
-    - `state: Object` An object to initial model state
-    - `reducers?: Object` Key is the action type, and value is the reducer function.
-    - `effects?: Object` Key is the action type, and value is the worker saga. The watcher saga treat these effects in `takeEvery` way. This is different from the effects concept of redux-saga.
+    - `state: Object` An object to initial model state.
+    - `reducers?: Object`
+        - `key` Action type.
+        - `value: (state: Object, action: Object) => newState: Object` Reducer function.
+
+    - `effects?: Object` A container of worker sagas. This is different from the redux-saga effects.
+    
+        - `key` Action type.
+        - `value: (action: Object, effectCreators: Object)` Worker saga. The watcher sagas treat these in `takeEvery` way. `effectCreators`'s properties are `call`, `put` and `select`.
 
     - `latests?: Object` Same as `effects` but in `takeLatest` way.
     - `leadings?: Object` Same as `effects` but in `takeLeading` way.
-    - `sagas?: Object` Write watcher sagas and take full advantage of redux-saga.
+    - `sagas?: Object` Write watcher and worker sagas and take full advantage of redux-saga.
     - `init?: (dispatch: (action: Object), onError: (error: Error))` If provided, it will be called on model initial.
 
 ### Models Example
