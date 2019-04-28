@@ -60,6 +60,20 @@ if (module.hot && process.env.NODE_ENV !== 'production') {
 
 - <a href="https://leafoftree.github.io/react-int/#/apis">APIs</a>
 
+## Data Flow
+                                                          --Model-- 
+           defines       triggers             sync       |         |   updates
+    State ----------> UI ----------> Actions ----------> | Reducer | ----------> Store
+      ^                                 |                |         |            |
+      |                                 |     async      |         |            |
+      |                                 |--------------->|  Saga   |            |
+      |                                 |<---------------|         |            |
+      |                                       puts        ---------             |
+      |                                                                         |
+       -------------------------------------------------------------------------
+                                    contains
+
+
 ## Documentation
 
 Basic introduction can be found on [the website](https://leafoftree.github.io/react-int).
