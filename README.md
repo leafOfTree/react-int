@@ -20,6 +20,9 @@ A simple way to use [react][0] with [react-redux][1] and [redux-saga][2]. Keep m
 - Handles Effect errors without terminating app.
 - Works with [create-react-app][4].
 
+
+Any issue or pull request is welcome.
+
 ## How it works
 
 react-int is an encapsulation of react-redux and redux-saga, aiming to simplify code and related files. Its main job is to create store from models and render app.
@@ -64,13 +67,13 @@ if (module.hot && process.env.NODE_ENV !== 'production') {
                                                           --Model-- 
            defines       triggers             sync       |         |   updates
     State ----------> UI ----------> Actions ----------> | Reducer | ----------> Store
-      ^                                 |                |         |            |
-      |                                 |     async      |         |            |
-      |                                 |--------------->|  Saga   |            |
-      |                                 |<---------------|         |            |
-      |                                       puts        ---------             |
-      |                                                                         |
-       -------------------------------------------------------------------------
+      ^                                 |                |         |               |
+      |                                 |     async      |         |               |
+      |                                 |--------------->|  Saga   |               |
+      |                                 |<---------------|         |               |
+      |                                       puts        ---------                |
+      |                                                                            |
+       ----------------------------------------------------------------------------
                                     contains
 
 
@@ -82,7 +85,7 @@ Refer to [react][0], [react-redux][1], [redux-saga][2] for further documentation
 
 ## Development
 
-Any issue or pull request is welcome.
+See <a href="https://leafoftree.github.io/react-int/#/development">Development</a>.
 
 [0]: https://github.com/facebook/react
 [1]: https://github.com/reduxjs/react-redux
