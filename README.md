@@ -32,7 +32,7 @@ react-int is an encapsulation of react-redux and redux-saga, aiming to simplify 
     yarn add react-redux redux-saga react-int
 
     # or 
-    npm i --save react-redux redux-saga react-int
+    npm i react-redux redux-saga react-int
 
 ## Usage
 
