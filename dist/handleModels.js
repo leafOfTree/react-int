@@ -26,7 +26,7 @@ const handleModels = (models, store, options) => {
     } = model;
 
     if (init) {
-      const prev = prevModels[namespace]; // HMR only when init is changed
+      const prev = prevModels[namespace]; // Recall init only when init is changed
 
       const isSameInit = prev && prev.init && prev.init.toString() === init.toString();
 

@@ -4,7 +4,7 @@ const isMatchType = (value, type, typeInfo) => {
   return (value instanceof type) || (typeof value === typeInfo);
 }
 
-const validateateConfigKey = (key, value) => {
+const validateConfigKey = (key, value) => {
   const descriptor = configDescriptor[key];
   const { type, typeInfo } = descriptor;
 
@@ -12,6 +12,8 @@ const validateateConfigKey = (key, value) => {
   if (key === 'App') {
     valid = value instanceof type
       || (value.apply && value.bind && value.call);
+  } if (key === 'root' && value === null) {
+    valid = true;
   } else {
     valid = isMatchType(value, type, typeInfo);
   }
@@ -71,7 +73,7 @@ export const validateConfig = config => {
   }
 
   for (let key in config) {
-    validateateConfigKey(key, config[key]);
+    validateConfigKey(key, config[key]);
   }
 }
 

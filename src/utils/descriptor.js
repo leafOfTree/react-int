@@ -8,7 +8,7 @@ export const configDescriptor = {
   root: {
     required: true,
     description: 'DOM container to render into',
-    type: HTMLElement,
+    type: typeof(HTMLElement) !== 'undefined' && HTMLElement,
     typeInfo: 'HTMLElement',
   },
   models: {

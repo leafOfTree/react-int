@@ -5,17 +5,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.validateModels = exports.validateConfig = void 0;
 
-var _react = _interopRequireDefault(require("react"));
-
 var _descriptor = require("./descriptor");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const isMatchType = (value, type, typeInfo) => {
   return value instanceof type || typeof value === typeInfo;
 };
 
-const validateateConfigKey = (key, value) => {
+const validateConfigKey = (key, value) => {
   const descriptor = _descriptor.configDescriptor[key];
   const {
     type,
@@ -25,6 +21,10 @@ const validateateConfigKey = (key, value) => {
 
   if (key === 'App') {
     valid = value instanceof type || value.apply && value.bind && value.call;
+  }
+
+  if (key === 'root' && value === null) {
+    valid = true;
   } else {
     valid = isMatchType(value, type, typeInfo);
   }
@@ -85,7 +85,7 @@ const validateConfig = config => {
   }
 
   for (let key in config) {
-    validateateConfigKey(key, config[key]);
+    validateConfigKey(key, config[key]);
   }
 };
 
@@ -95,11 +95,7 @@ const validateModels = models => {
   validateUniqueNamespace(models);
   models.forEach(model => {
     const {
-      namespace,
-      state,
-      reducers,
-      effects,
-      init
+      namespace
     } = model;
 
     if (!namespace) {
