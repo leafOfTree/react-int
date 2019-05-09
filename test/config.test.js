@@ -1,11 +1,12 @@
 import configureStore from '../src/configureStore';
 import { validateConfig } from '../src/utils';
 import {
-  models, invalidModels, options, conflictOptions, mockCount,
+  models, invalidModels, options, config, conflictOptions, mockCount,
 } from './data';
 
 describe('assert config, models', () => {
   test('assert valid model', () => {
+    validateConfig(config);
     const { store } = configureStore(models, options);
   })
 

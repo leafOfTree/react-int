@@ -21,9 +21,7 @@ const validateConfigKey = (key, value) => {
 
   if (key === 'App') {
     valid = value instanceof type || value.apply && value.bind && value.call;
-  }
-
-  if (key === 'root' && value === null) {
+  } else if (key === 'root' && value === null) {
     valid = true;
   } else {
     valid = isMatchType(value, type, typeInfo);

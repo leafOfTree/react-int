@@ -139,12 +139,24 @@ export const invalidModels = {
   ],
 }
 
+
 export const options = {
   initialState: {
     test: {
       count: 10,
     },
   },
+}
+
+export const config = {
+  App: {
+    call: true,
+    apply: true,
+    bind: true,
+  },
+  root: null,
+  models: [],
+  ...options,
 }
 
 export const conflictOptions = {
