@@ -20,8 +20,7 @@ A simple way to use [react][0] with [react-redux][1] and [redux-saga][2]. Keep m
 - Handles Effect errors without terminating app.
 - Works with [create-react-app][4].
 
-
-Any issue or pull request is welcome.
+Feel free to make an issue or a pull request.
 
 ## How it works
 
@@ -39,6 +38,7 @@ react-int is an encapsulation of react-redux and redux-saga, aiming to simplify 
 Start app, write models and connect components. That's all. :tada:
 
 ```javascript
+// index.js
 import start from "react-int";
 import App from "./App";
 import models from "./models";
