@@ -19,12 +19,13 @@ const withRedux = (App, models, options) => {
     </ReduxProvider>
   );
 
-  return {
-    reduxApp,
+  reduxApp.updateHelpers = {
     updateModels,
     updateReducer,
     updateSaga,
   };
+
+  return reduxApp;
 }
 
 export default withRedux;

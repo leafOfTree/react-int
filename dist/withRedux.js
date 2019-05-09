@@ -35,12 +35,12 @@ const withRedux = (App, models, options) => {
     store: store
   }, _react.default.createElement(App, null));
 
-  return {
-    reduxApp,
+  reduxApp.updateHelpers = {
     updateModels,
     updateReducer,
     updateSaga
   };
+  return reduxApp;
 };
 
 var _default = withRedux;
