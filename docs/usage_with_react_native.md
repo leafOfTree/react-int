@@ -115,7 +115,7 @@ Models are objects containing `reducers` and `effects`(worker sagas) which are s
 
 Models can be defined in separated files and required to one arary.
 
-Add './models/index.js'
+Add `./models/index.js`
 
 ```javascript
 import { call, put, select } from "redux-saga/effects";
@@ -187,6 +187,6 @@ After
 
     expo start
 
-something like <https://expo.io/@leafvocation/React-int_for_React_Native> should appear on the phone or simulator if everything goes well.
+App like <https://expo.io/@leafvocation/React-int_for_React_Native> should appear on the phone or simulator if everything goes well.
 
 [0]: https://expo.io/@leafvocation/React-int_for_React_Native

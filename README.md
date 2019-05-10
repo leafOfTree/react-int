@@ -18,6 +18,7 @@ A simple way to use [React][0]/[React Native][5] with [react-redux][1] and [redu
 - HMR everywhere. (Need extra code snippet)
 - Promisified dispatch.
 - Handles Effect errors without terminating app.
+- [Support React Native][8].
 - Works with [create-react-app][4].
 
 Feel free to make an issue or a pull request.
