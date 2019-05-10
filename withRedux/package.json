@@ -1,0 +1,4 @@
+{
+  "name": "redux-int/withRedux",
+  "main": "../dist/withRedux.js"
+}

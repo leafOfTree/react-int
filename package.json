@@ -13,6 +13,7 @@
   },
   "files": [
     "dist",
+    "withRedux", 
     "README.md"
   ],
   "keywords": [
