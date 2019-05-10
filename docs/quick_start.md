@@ -14,7 +14,7 @@
 
     cd react-int-demo
 
-    yarn add react-redux redux-saga react-int
+    npm i react-redux redux-saga react-int
 
 ## Start app
 
