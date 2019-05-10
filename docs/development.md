@@ -25,6 +25,8 @@
     cd my-project
     npm link react-int
 
+> You have to pass `render` and `Provider` in options. It may not work for React Native .
+
 ## lint
 
     npm run lint

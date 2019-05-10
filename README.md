@@ -57,6 +57,8 @@ if (module.hot && process.env.NODE_ENV !== 'production') {
 }
 ```
 
+See also
+
 - Full online demo: [![Edit react-int-demo](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/61wpmyj04r?fontsize=14)
 
 - <a href="https://leafoftree.github.io/react-int/#/quick_start">Quick start</a>

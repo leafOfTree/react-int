@@ -45,13 +45,13 @@ The store's reducing function will be called with the current `state` and the gi
 
 > `put(action)` will finally trigger `dispatch(action)`.
 
-###  this.props.dispatch()
+### this.props.dispatch()
 
 After `connect()`, `dispatch` will be mapped to the new wrapper component prop and can be used as `this.props.dispatch(actoin)`.
 
 ### return Promise
 
-`react-int` changes `dispatch` return value from action to a Promise, which resolves with effects return value.
+`react-int` changes `dispatch` return value from action to a Promise, which resolves with value the effect returns.
 
 ### Example
 
