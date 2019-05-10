@@ -8,7 +8,7 @@
   </a>
 </p>
 
-A simple way to use [react][0] with [react-redux][1] and [redux-saga][2]. Keep most things in one file(model) like [Dva][3].
+A simple way to use [React][0]/[React Native][5] with [react-redux][1] and [redux-saga][2]. Keep most things in one file(model) like [Dva][3].
 
 ## Feature
 
@@ -61,9 +61,13 @@ See also
 
 - Full online demo: [![Edit react-int-demo](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/61wpmyj04r?fontsize=14)
 
-- <a href="https://leafoftree.github.io/react-int/#/quick_start">Quick start</a>
+- [Quick start][6]
 
-- <a href="https://leafoftree.github.io/react-int/#/apis">APIs</a>
+- [APIs][7]
+
+## Usage with React Native
+
+See [Usage with React Native][8]
 
 ## Data Flow
                                                           --Model-- 
@@ -94,3 +98,7 @@ See <a href="https://leafoftree.github.io/react-int/#/development">Development</
 [2]: https://github.com/redux-saga/redux-saga
 [3]: https://github.com/dvajs/dva
 [4]: https://github.com/facebook/create-react-app
+[5]: https://github.com/leafOfTree/react-native
+[6]: https://leafoftree.github.io/react-int/#/quick_start
+[7]: https://leafoftree.github.io/react-int/#/apis
+[8]: https://leafoftree.github.io/react-int/#/usage_with_react_native

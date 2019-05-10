@@ -6,6 +6,8 @@
 
 ## Create project
 
+    npm i -g create-react-app
+
     npx create-react-app react-int-demo 
 
 ## Install
@@ -22,7 +24,7 @@ Following operations are under the `src` directory.
 
 Replace `ReactDOM.render` with `start` method from `react-int` to start app. Extra code has to be added manully to enable `HMR` for compoents, reducers and sagas, which is very convenient for development.
 
-Change `index.js`
+Modify `index.js`
 
 ```javascript
 import start from 'react-int';
@@ -106,7 +108,7 @@ The original react-redux's [connect][5] is used to map state to component props.
 
 `this.props.dispatch` is used to dispatch actions for reducers and effects.
 
-Change `./App.js`
+Modify `./App.js`
 
 ```javascript
 import React, { Component } from 'react';
@@ -166,7 +168,11 @@ export default connect(state => ({
 
 ## Result
 
-After `npm start`, <http://localhost:3000> should look like <https://csb-61wpmyj04r.netlify.com/> if everything goes well.
+After 
+
+    npm start
+
+<http://localhost:3000> should look like <https://csb-61wpmyj04r.netlify.com/> if everything goes well.
 
 [0]: https://github.com/facebook/react
 [1]: https://github.com/reduxjs/react-redux
