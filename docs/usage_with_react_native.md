@@ -188,6 +188,6 @@ After
 
     expo start
 
-App like <https://expo.io/@leafvocation/React-int_for_React_Native> should appear on the phone or simulator if everything goes well.
+App like <https://expo.io/@leafvocation/React-int_for_React_Native>(scan the QR code with expo mobile app) should appear on the phone or simulator if everything goes well.
 
 [0]: https://expo.io/@leafvocation/React-int_for_React_Native
