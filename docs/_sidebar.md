@@ -1,6 +1,6 @@
 - [Overview](/)
 - [Quick Start](quick_start.md)
-- [Usage with React Native](usage_with_react_native.md)
 - [APIs](apis.md)
 - [External APIs](external_apis.md)
+- [Usage with React Native](usage_with_react_native.md)
 - [Development](development.md)

@@ -193,4 +193,22 @@ if (module.hot && process.env.NODE_ENV !== 'production') {
 }
 ```
 
+## withRedux: (App, models, options?) => reduxApp
+
+`withRedux` is a HOC which accepts App and returns enhanced App with redux Provider. [It's useful for React Native](usage_with_react_native).
+
+#### Example
+
+```javascript
+class App extends React.Component {
+  //...
+}
+
+const connectedApp = connect(state => ({
+  ...state.app,
+}))(App);
+
+export default withRedux(connectedApp, models);
+```
+
 [0]: https://redux-saga.js.org/docs/advanced/FutureActions.html
