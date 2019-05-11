@@ -99,7 +99,7 @@ See <a href="https://leafoftree.github.io/react-int/#/development">Development</
 [2]: https://github.com/redux-saga/redux-saga
 [3]: https://github.com/dvajs/dva
 [4]: https://github.com/facebook/create-react-app
-[5]: https://github.com/leafOfTree/react-native
+[5]: https://github.com/facebook/react-native
 [6]: https://leafoftree.github.io/react-int/#/quick_start
 [7]: https://leafoftree.github.io/react-int/#/apis
 [8]: https://leafoftree.github.io/react-int/#/usage_with_react_native
