@@ -17,7 +17,7 @@ Choose 'blank' and input your project name like 'react-int-demo'.
     cd react-int-demo
     npm i react-redux@6.0.0 redux-saga react-int
 
-**Note**: Currently react-redux version has to be fixed at 6.0.0 to work with react-native's React.
+**Note**: Currently react-redux version has to be fixed at `6.0.0` to work with react-native's React.
 
 ## Enhance App
 
