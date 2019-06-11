@@ -48,12 +48,6 @@ class App extends React.Component {
     });
   };
 
-  increaseTwoAsync = () => {
-    this.props.dispatch({
-      type: "app/increaseTwoAsync"
-    });
-  };
-
   render() {
     return (
       <View style={styles.container}>
@@ -63,7 +57,7 @@ class App extends React.Component {
         <Text>
           {this.props.loading ? 'Loading...' : <Text>&nbsp;</Text>}
         </Text>
-        <View style={styles.buttons}>
+        <View>
           <View style={styles.button}>
             <Button
               onPress={this.increase}
@@ -72,16 +66,8 @@ class App extends React.Component {
           </View>
           <View style={styles.button}>
             <Button
-              style={styles.button}
               onPress={this.increaseAsync}
               title="Increase Asyn"
-            />
-          </View>
-          <View style={styles.button}>
-            <Button
-              style={styles.button}
-              onPress={this.increaseTwoAsync}
-              title="Increase Two Asyn"
             />
           </View>
         </View>
@@ -153,30 +139,9 @@ export default [
         const count = yield select(state => state.app.count);
         yield put({
           type: "update",
-          payload: {
-            count: count + 1
-          }
+          payload: { count: count + 1 }
         });
       },
-      *increaseTwoAsync(action) {
-        yield put({
-          type: "app/update",
-          payload: { loading: true }
-        });
-        yield call(delay, 500);
-        yield put({
-          type: "app/update",
-          payload: { loading: false }
-        });
-
-        const count = yield select(state => state.app.count);
-        yield put({
-          type: "app/update",
-          payload: {
-            count: count + 2
-          }
-        });
-      }
     }
   }
 ];
