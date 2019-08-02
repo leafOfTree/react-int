@@ -10,7 +10,7 @@
 
 A simple way to use [React][0]/[React Native][5] with [react-redux][1] and [redux-saga][2]. Keep most things in one file(model) like [Dva][3].
 
-## Feature
+## Features
 
 - Reducers and sagas in one file.
 - Namespace.
@@ -18,14 +18,14 @@ A simple way to use [React][0]/[React Native][5] with [react-redux][1] and [redu
 - HMR everywhere. (Need extra code snippet)
 - Promisified dispatch.
 - Handles Effect errors without terminating app.
-- [Support React Native][8].
+- [Supports React Native][8].
 - Works with [create-react-app][4].
 
 Feel free to make an issue or a pull request.
 
 ## How it works
 
-react-int is an encapsulation of react-redux and redux-saga, aiming to simplify code and related files. Its main job is to create store from models and render app.
+React-int is an encapsulation of react-redux and redux-saga, aiming to simplify code and related files. Its main job is to create store from models and render app.
 
 ## Install
 

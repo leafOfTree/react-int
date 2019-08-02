@@ -25,21 +25,21 @@
   "author": "https://github.com/leafOfTree",
   "license": "ISC",
   "devDependencies": {
-    "@babel/cli": "^7.4.3",
-    "@babel/core": "^7.4.3",
+    "@babel/cli": "^7.5.0",
+    "@babel/core": "^7.5.4",
     "@babel/plugin-transform-react-jsx": "^7.3.0",
-    "@babel/preset-env": "^7.4.3",
+    "@babel/preset-env": "^7.5.4",
     "@babel/preset-react": "^7.0.0",
-    "babel-eslint": "^10.0.1",
-    "babel-jest": "^24.7.1",
+    "babel-eslint": "^10.0.2",
+    "babel-jest": "^24.8.0",
     "eslint": "^5.16.0",
-    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-react": "^7.14.2",
     "jest": "^24.8.0",
-    "nodemon": "^1.18.11",
+    "nodemon": "^1.19.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^6.0.1",
-    "redux-saga": "^1.0.2"
+    "redux-saga": "^1.0.5"
   },
   "dependencies": {}
 }
