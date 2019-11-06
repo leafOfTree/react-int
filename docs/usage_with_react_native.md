@@ -25,7 +25,7 @@ High Order Component `withRedux` wil enhance app to be aware of redux. `connect`
 
 Modify `./App.js`
 
-```javascript
+```jsx
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { connect } from 'react-redux';

@@ -16,7 +16,7 @@ See [React Redux connect()][0] for details.
 
 The connected component `connect(mapStateToProp)(App)` will subscribe to Redux store. Its `name` prop will update when `state.app.name` is updated.
 
-```javascript
+```jsx
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -49,13 +49,13 @@ The store's reducing function will be called with the current `state` and the gi
 
 After `connect()`, `dispatch` will be mapped to the new wrapper component prop and can be used as `this.props.dispatch(actoin)`.
 
-### return Promise
+### Return Promise
 
-`react-int` changes `dispatch` return value from action to a Promise, which resolves with value the effect returns.
+`react-int` changes `dispatch` return value from action to a Promise, which resolves with the value that the effect returns.
 
 ### Example
 
-```javascript
+```jsx
 class App extends Component {
   login = () => {
     this.props.dispatch({
@@ -102,11 +102,11 @@ See [Redux dispatch(action)][1] for details.
 
 In `redux-saga`, Sagas are implemented using Generator function. To express the Saga logic, we yield plain JavaScript Objects from the Generator. We call those objects as Effects. An [effect][3] is an object that contains some information to be interpreted by the middleware.
 
-**Vocabulory**
+**Vocabulary**
 
-the middleware: the redux-saga middleware
+- the middleware: the redux-saga middleware
 
-blocking: the Generator is suspended
+- blocking: the Generator is suspended
 
 See [Redux Saga API Reference][2] for details.
 
@@ -123,6 +123,24 @@ See [Redux Saga API Reference][2] for details.
 ## put()
 
 `put(action)` Creates an Effect description that instructs the middleware to dispatch an action to the Store. This effect is `non-blocking`.
+
+## all()
+
+Run multiple effects in parallel and wait for all of them to complete. It's quite the corresponding API to standard [Promise.all][4]
+
+### Example
+
+```javascript
+import { fetchCustomers, fetchProducts } from './path/to/api';
+import { all, call } from `redux-saga/effects`;
+
+function* mySaga() {
+  const [customers, products] = yield all([
+    call(fetchCustomers),
+    call(fetchProducts),
+  ]);
+}
+```
 
 ## select()
 
@@ -174,3 +192,4 @@ If no argument is provided, `yield select()` will be resolved with the entire st
 [1]: https://redux.js.org/api/store#a-id-dispatch-class-anchor-a-dispatchaction-dispatch
 [2]: https://redux-saga.js.org/docs/api/
 [3]: https://redux-saga.js.org/docs/api/#effect-creators
+[4]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all

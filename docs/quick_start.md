@@ -110,7 +110,7 @@ The original react-redux's [connect][5] is used to map state to component props.
 
 Modify `./App.js`
 
-```javascript
+```jsx
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './App.css';
