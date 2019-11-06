@@ -1,3 +1,7 @@
+body {
+  font-size: 16px;
+}
+
 .markdown-section h3 {
   font-size: 1rem;
   margin: 40px 0 .6rem;
