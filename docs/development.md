@@ -38,3 +38,8 @@
 ## Build
 
     npm run build
+
+## Documentation
+
+    npm i docsify -g
+    npm run doc
