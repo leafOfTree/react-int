@@ -8,13 +8,13 @@
 
     npm i -g expo-cli
 
-    expo init
+    expo init reactIntDemo
 
-Choose 'blank' and input your project name like 'react-int-demo'.
+Choose `blank` and input your project name.
 
 ## Install
 
-    cd react-int-demo
+    cd reactIntDemo
     npm i react-redux@6.0.0 redux-saga react-int
 
 **Note**: Currently react-redux version has to be fixed at `6.0.0` to work with react-native's React.
