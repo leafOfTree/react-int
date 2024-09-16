@@ -1,12 +1,6 @@
 <h1 align="center">
-  React-Int(egrity)
+  React-Int
 </h1>
-
-<p align="center">
-  <a href="https://travis-ci.com/leafOfTree/react-int">
-      <img src="https://travis-ci.com/leafOfTree/react-int.svg?token=2kNWVmnjedaFy64rtqzp&branch=master" />
-  </a>
-</p>
 
 A simple way to use [React][0]/[React Native][5] with [react-redux][1] and [redux-saga][2]. Keep most things in one file(model) like [Dva][3].
 
